@@ -1,0 +1,19 @@
+npm create vite@latest
+npm install axios react-router-dom react-toastify
+
+axios -> making API calls
+react-toastify -> makes notifications
+
+npm install @tailwindcss/vite
+add below in vite config:
+import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+});
+
+then just: @import "tailwindcss";
+
