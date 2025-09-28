@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { assets } from "../assets/assets";
 import {useNavigate} from 'react-router-dom'
+import {AppContext} from "../context/AppContext"
+import axios from 'axios'
 
 const Login = () => {
 
   const navigate = useNavigate()
+  const {backendUrl, setIsLoggedIn} = useContext(AppContext)
   const [state, setState] = useState("Sign Up");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const onSubmitHandler = async(e)=>{
 
+    try{
+      e.preventDefault();
+
+      if (state==='Sign Up'){
+        //make backend calls
+        await 
+
+      }else{
+
+      }
+    }
+    catch(error){
+
+    }
+
+  }
   return (
     <div className="flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400">
       <img
@@ -25,7 +45,7 @@ const Login = () => {
         <p className="text-center text-sm mb-6">
           {state === "Sign Up" ? "Create you account" : "Login to your account"}
         </p>
-        <form>
+        <form onSubmit={onSubmitHandler}>
           {state==='Sign Up' && (<div className="mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-[#333A5C]">
             <img src={assets.person_icon}></img>
             <input
