@@ -14,7 +14,9 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({credentials:true}));
+//add our frontend url because we will be getting requests from there.
+const allowedOrigins = ['http://localhost:5173']
+app.use(cors({origin:allowedOrigins, credentials:true}));
 //accept requests from other sites and allow them to send cookies or login info
 
 //API endpoints

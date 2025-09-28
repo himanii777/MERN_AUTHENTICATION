@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import {useNavigate} from 'react-router-dom'
 import {AppContext} from "../context/AppContext"
 import axios from 'axios'
+import {toast} from 'react-toastify'
 
 const Login = () => {
 
@@ -17,17 +18,35 @@ const Login = () => {
 
     try{
       e.preventDefault();
-
+      
+      axios.defaults.withCredentials = true //send cookies
+      
       if (state==='Sign Up'){
         //make backend calls
-        await 
+        const {data}= await axios.post(backendUrl + '/api/auth/register', {name, email, password})
+
+        if (data.success){
+          setIsLoggedIn(true)
+          navigate('/')
+        }else{
+          toast.error(data.message)
+        }
 
       }else{
+        //state is login 
+        const {data}= await axios.post(backendUrl + '/api/auth/login', {email, password})
+
+        if (data.success){
+          setIsLoggedIn(true)
+          navigate('/')
+        }else{
+          toast.error(data.message)
+        }
 
       }
     }
     catch(error){
-
+      toast.error(error.message)
     }
 
   }
