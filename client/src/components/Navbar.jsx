@@ -3,7 +3,9 @@ import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
+/* small inline icons (unchanged) */
 const IconMail = ({ className = "w-4 h-4" }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden>
     <path d="M3 8.5v7A2.5 2.5 0 0 0 5.5 18h13A2.5 2.5 0 0 0 21 15.5v-7" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
@@ -53,24 +55,46 @@ const Navbar = () => {
     setOpen(true);
   };
 
+  // logout action: close menu, clear client state, go home
   const onLogout = async () => {
     try {
-      // call backend logout to clear cookie/session
       await axios.post(`${backendUrl}/api/auth/logout`, {}, { withCredentials: true });
     } catch (err) {
       console.warn("logout error:", err?.response?.data || err.message);
     } finally {
-      // close menu first so it doesn't linger, clear client state, then go home
       setOpen(false);
       setUserData(null);
       setIsLoggedIn(false);
-      navigate("/");      // <-- navigate to home (not /login)
+      navigate("/");
     }
   };
 
-  const onVerifyEmail = () => {
-    setOpen(false);
-    navigate("/email-verify");
+  // NEW: send verification OTP then navigate
+  const sendVerificationOtp = async () => {
+    // if the user is already verified, just navigate
+    if (userData?.isVerified) {
+      setOpen(false);
+      navigate("/email-verify");
+      return;
+    }
+
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(`${backendUrl}/api/auth/send-verify-otp`, {}, { withCredentials: true });
+
+      if (data?.success) {
+        setOpen(false);
+        toast.success(data.message || "Verification OTP sent");
+        navigate("/email-verify");
+      } else {
+        toast.error(data?.message || "Failed to send verification OTP");
+      }
+    } catch (error) {
+      // safe error handling
+      const msg = error?.response?.data?.message || error?.message || "Network or server error";
+      toast.error(msg);
+      console.error("sendVerificationOtp error:", error);
+    }
   };
 
   const keyActivate = (e, fn) => {
@@ -112,8 +136,8 @@ const Navbar = () => {
                 <li
                   role="menuitem"
                   tabIndex={0}
-                  onClick={onVerifyEmail}
-                  onKeyDown={(e) => keyActivate(e, onVerifyEmail)}
+                  onClick={sendVerificationOtp}         // <- wired here
+                  onKeyDown={(e) => keyActivate(e, sendVerificationOtp)}
                   className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors duration-150 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
@@ -130,7 +154,7 @@ const Navbar = () => {
                     {userData?.isVerified ? (
                       <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">Verified</span>
                     ) : (
-                      <span className="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-800">Not verified</span>
+                      <span/>
                     )}
                   </div>
                 </li>
