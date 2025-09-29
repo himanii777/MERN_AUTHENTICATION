@@ -20,6 +20,18 @@ MERN_AUTHENTICATION is a full-stack authentication system built with the MERN st
 - **React** – frontend (to be added)  
 - **Node.js** – runtime environment  
 
+## Screenshots
+
+### Home Page
+<img width="1898" height="873" alt="image" src="https://github.com/user-attachments/assets/a22a132d-0de7-4c14-bbeb-a1c11f2f9ecd" />
+
+### Login Page
+<img width="1900" height="858" alt="image" src="https://github.com/user-attachments/assets/1fab26b4-8b06-4547-b845-267af3a679d0" />
+
+### Reset Password
+<img width="1883" height="855" alt="image" src="https://github.com/user-attachments/assets/e8c0190c-7111-4765-a26b-0c19c7b5fab0" />
+
+
 ## Getting Started
 
 1. Clone the repo:  
