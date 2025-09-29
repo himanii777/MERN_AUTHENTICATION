@@ -41,9 +41,9 @@ const Header = () => {
               alt="mascot"
               className="w-40 h-40 sm:w-48 sm:h-48 rounded-full shadow-xl ring-4 ring-white/70"
             />
-            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] sm:text-xs px-3 py-1 rounded-full bg-white shadow border border-indigo-100 text-indigo-700">
+            {/* <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 text-[10px] sm:text-xs px-3 py-1 rounded-full bg-white shadow border border-indigo-100 text-indigo-700">
               Friendly Onboarding :)
-            </span>
+            </span> */}
           </div>
 
           <h1 className="mt-8 inline-flex items-center gap-2 text-sm sm:text-base font-medium text-slate-600">
