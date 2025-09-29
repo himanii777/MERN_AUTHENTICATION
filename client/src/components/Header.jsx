@@ -27,9 +27,11 @@
 import React, { useContext } from "react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { userData } = useContext(AppContext);
+  const navigate = useNavigate();
 
   return (
     <section className="w-full mt-28 sm:mt-36 px-4">
@@ -64,7 +66,7 @@ const Header = () => {
           <button
             className="mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3 text-white font-medium shadow-lg
                        bg-gradient-to-r from-indigo-600 to-violet-600 hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-          >
+          onClick={() => navigate("/login")}>
             Get Started
             <img src={assets.arrow_icon} alt="arrow" className="w-4 h-4" />
           </button>
